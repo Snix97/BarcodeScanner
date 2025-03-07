@@ -37,6 +37,20 @@
 			);
 			target = 5286D4CB2D7B3FA400C417E2 /* BarcodeScanner */;
 		};
+		5286D5342D7B562B00C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScannerTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ScannerViewController.swift,
+			);
+			target = 5286D4DB2D7B3FA800C417E2 /* BarcodeScannerTests */;
+		};
+		5286D5352D7B562B00C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScannerUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				ScannerViewController.swift,
+			);
+			target = 5286D4E52D7B3FA900C417E2 /* BarcodeScannerUITests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +58,8 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				5286D52F2D7B484900C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScanner" target */,
+				5286D5342D7B562B00C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScannerTests" target */,
+				5286D5352D7B562B00C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScannerUITests" target */,
 			);
 			path = BarcodeScanner;
 			sourceTree = "<group>";

@@ -1,0 +1,116 @@
+//
+//  ScannerViewController.swift
+//  BarcodeScanner
+//
+//  Created by Claire Roughan on 07/03/2025.
+//
+
+import Foundation
+import AVFoundation
+import UIKit
+
+/*
+ How SwiftUI communications with UIKit is through delegates and protocols.
+ 
+ Coordinator is a relayer or translator in between SwiftUI and UIKit
+ 
+ 
+ */
+
+protocol ScannerViewControllerDelegate: AnyObject {
+    
+    func didFind(barcode: String)
+}
+
+final class ScannerViewController: UIViewController {
+    
+    let captureSession = AVCaptureSession()
+    
+    //previewLayer is what is picked up as you move the camera around its optional as it won't exist at first load
+    var previewLayer: AVCaptureVideoPreviewLayer?
+    weak var scannerDelegate:(ScannerViewControllerDelegate)?
+    
+    init(scannerDelegate: ScannerViewControllerDelegate) {
+        
+        //Designated initialer for a UIViewController
+        super.init(nibName: nil, bundle: nil)
+        self.scannerDelegate = scannerDelegate
+    }
+    
+    // Needed if the ScannerViewController was initialised via a storyboard
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
+    //Get camera looking for barcodes and preview layer up and running. With checks e.g camera access etc
+    private func setupCaptureSession() {
+        
+        // Do we have a device to capture video?
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
+            return
+        }
+        
+        let videoInput: AVCaptureDeviceInput
+        
+        do {
+            try videoInput = AVCaptureDeviceInput(device:  videoCaptureDevice)
+        } catch {
+            return
+        }
+        
+        if captureSession.canAddInput(videoInput) {
+            captureSession.addInput(videoInput)
+        } else {
+            return
+        }
+            
+        let metaDataOutput = AVCaptureMetadataOutput()
+        
+        if captureSession.canAddOutput(metaDataOutput) {
+            captureSession.addOutput(metaDataOutput)
+            metaDataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            
+            //ean8, .ean13 are the dif type of barcode we can scan the number are the digits in the code
+            metaDataOutput.metadataObjectTypes = [.ean8, .ean13]
+        } else {
+            return
+        }
+        
+        //Setup previewLayer to show the camera
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer!.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(previewLayer!)
+        
+        captureSession.startRunning()
+    }
+}
+
+//What happens to the s csnned Barcode??
+extension ScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
+    
+    
+   func metadataOutput(_ ouput: AVCaptureMetadataOutput, didOutput metadataOnjects: [ AVMetadataObject], from connection: AVCaptureConnection) {
+        
+       guard let object = metadataOnjects.first else {
+           return
+       }
+       
+       guard let machineReadableOnject = object as? AVMetadataMachineReadableCodeObject else {
+           return
+       }
+       
+       guard let barcode = machineReadableOnject.stringValue else {
+           return
+       }
+       
+       scannerDelegate?.didFind(barcode: barcode)
+    }
+}
+
+
+
+
+
+
+
+
+
+
