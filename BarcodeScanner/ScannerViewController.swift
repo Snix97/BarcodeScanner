@@ -17,9 +17,15 @@ import UIKit
  
  */
 
+enum CameraError: String {
+    case invalidDeviceInput = "Camera problems? - Unable to capture input"
+    case invalidScannedValue = "The item scanned is not valid. This app scans EAN-6 and EAN-13 "
+}
+
 protocol ScannerViewControllerDelegate: AnyObject {
     
     func didFind(barcode: String)
+    func didSurface(error: CameraError)
 }
 
 final class ScannerViewController: UIViewController {
@@ -45,6 +51,7 @@ final class ScannerViewController: UIViewController {
         
         // Do we have a device to capture video?
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
+            scannerDelegate?.didSurface(error: .invalidDeviceInput)
             return
         }
         
@@ -53,12 +60,14 @@ final class ScannerViewController: UIViewController {
         do {
             try videoInput = AVCaptureDeviceInput(device:  videoCaptureDevice)
         } catch {
+            scannerDelegate?.didSurface(error: .invalidDeviceInput)
             return
         }
         
         if captureSession.canAddInput(videoInput) {
             captureSession.addInput(videoInput)
         } else {
+            scannerDelegate?.didSurface(error: .invalidDeviceInput)
             return
         }
             
@@ -71,6 +80,7 @@ final class ScannerViewController: UIViewController {
             //ean8, .ean13 are the dif type of barcode we can scan the number are the digits in the code
             metaDataOutput.metadataObjectTypes = [.ean8, .ean13]
         } else {
+            scannerDelegate?.didSurface(error: .invalidDeviceInput)
             return
         }
         
@@ -83,21 +93,24 @@ final class ScannerViewController: UIViewController {
     }
 }
 
-//What happens to the s csnned Barcode??
+//What happens to the scsnned Barcode??
 extension ScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
     
     
    func metadataOutput(_ ouput: AVCaptureMetadataOutput, didOutput metadataOnjects: [ AVMetadataObject], from connection: AVCaptureConnection) {
         
        guard let object = metadataOnjects.first else {
+           scannerDelegate?.didSurface(error: .invalidScannedValue)
            return
        }
        
        guard let machineReadableOnject = object as? AVMetadataMachineReadableCodeObject else {
+           scannerDelegate?.didSurface(error: .invalidScannedValue)
            return
        }
        
        guard let barcode = machineReadableOnject.stringValue else {
+           scannerDelegate?.didSurface(error: .invalidScannedValue)
            return
        }
        
