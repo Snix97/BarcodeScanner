@@ -17,9 +17,9 @@ import UIKit
  
  */
 
-enum CameraError: String {
-    case invalidDeviceInput = "Camera problems? - Unable to capture input"
-    case invalidScannedValue = "The item scanned is not valid. This app scans EAN-6 and EAN-13 "
+enum CameraError {
+    case invalidDeviceInput
+    case invalidScannedValue
 }
 
 protocol ScannerViewControllerDelegate: AnyObject {

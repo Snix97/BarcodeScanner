@@ -20,6 +20,9 @@ struct ScannerView: UIViewControllerRepresentable {
     //Create a Binding
     @Binding var scannedCode: String
     
+    //Go from UIKit -> Coordinator -> SwiftUI
+    @Binding var alertItem: AlertItem?
+    
     //Temp code to enable you to bring up the UIViewControllerRepresentable Protocol stubs
     //typealias UIViewControllerType = ScannerViewController
     
@@ -61,12 +64,13 @@ struct ScannerView: UIViewControllerRepresentable {
         }
         
         func didSurface(error: CameraError) {
-            print(error.rawValue)
+            switch error {
+                case .invalidDeviceInput: scannerView.alertItem = AlertContext.invalidDeviceInput
+                case .invalidScannedValue: scannerView.alertItem = AlertContext.invalidScannedType
+            }
         }
     }
  
 }
 
-#Preview {
-    ScannerView(scannedCode: .constant("12345678"))
-}
+
