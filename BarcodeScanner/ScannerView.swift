@@ -17,6 +17,9 @@ import SwiftUI
  */
 struct ScannerView: UIViewControllerRepresentable {
     
+    //Create a Binding
+    @Binding var scannedCode: String
+    
     //Temp code to enable you to bring up the UIViewControllerRepresentable Protocol stubs
     //typealias UIViewControllerType = ScannerViewController
     
@@ -30,7 +33,9 @@ struct ScannerView: UIViewControllerRepresentable {
     
     //When ScannerView gets called  makeCoordinator and makeUIViewController funcs get called automatically
     func makeCoordinator() -> Coordinator {
-        Coordinator()
+        
+        //When we create our coordinator it needs a ScannerView
+        Coordinator(scannerView: self)
     }
     
         
@@ -43,9 +48,16 @@ struct ScannerView: UIViewControllerRepresentable {
        
     final class Coordinator: NSObject, ScannerViewControllerDelegate {
         
+        private let scannerView: ScannerView
+        
+        init(scannerView: ScannerView) {
+            self.scannerView = scannerView
+        }
+        
         //UIKit tells the coordinator if found the barcode
         func didFind(barcode: String) {
             print(barcode)
+            scannerView.scannedCode = barcode
         }
         
         func didSurface(error: CameraError) {
@@ -56,5 +68,5 @@ struct ScannerView: UIViewControllerRepresentable {
 }
 
 #Preview {
-    ScannerView()
+    ScannerView(scannedCode: .constant("12345678"))
 }

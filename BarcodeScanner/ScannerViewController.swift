@@ -110,7 +110,10 @@ final class ScannerViewController: UIViewController {
         previewLayer!.videoGravity = .resizeAspectFill
         view.layer.addSublayer(previewLayer!)
         
-        captureSession.startRunning()
+        DispatchQueue.global(qos: .background).async {
+            self.captureSession.startRunning()
+        }
+        
     }
 }
 
@@ -135,6 +138,11 @@ extension ScannerViewController: AVCaptureMetadataOutputObjectsDelegate {
            return
        }
        
+       /*S
+        tops scanning as we have found a Barcode - but not used as you'd to include
+        functionality e.g a button to restart the scanning process
+        */
+      // captureSession.stopRunning()
        scannerDelegate?.didFind(barcode: barcode)
     }
 }

@@ -8,10 +8,20 @@
 import SwiftUI
 
 struct BarcodeScannerView: View {
+    
+    /*
+     Ensure whenever scannedCode changes the view will get updated. Take info
+     from coordinator and pass it to our scannerView. To do that we use @State
+     variables and Bindings $
+     */
+    @State private var scannedCode = ""
+    
     var body: some View {
         NavigationView {
             VStack {
-                ScannerView()
+                
+                //Add binding so whenever we change binding scannedCode in ScannerView we update the scannedCode @State variable here
+                ScannerView(scannedCode: $scannedCode)
                     .frame(maxWidth: .infinity, maxHeight: 400)
                 
                 //Just a spacer on its own pushes items to the top, but it can be customized with a frame
@@ -21,10 +31,10 @@ struct BarcodeScannerView: View {
                 Label("Barcode Scanned:", systemImage: "barcode.viewfinder")
                     .font(.title)
                 
-                Text("Not yet scanned")
+                Text(scannedCode.isEmpty ? "Not yet scanned" : scannedCode)
                     .bold()
                     .font(.title)
-                    .foregroundColor(.green)
+                    .foregroundColor(scannedCode.isEmpty ? .red :.green)
                     .padding()
             }
             .navigationTitle("Barcode Scanner")
