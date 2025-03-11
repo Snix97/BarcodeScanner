@@ -43,8 +43,29 @@ final class ScannerViewController: UIViewController {
         self.scannerDelegate = scannerDelegate
     }
     
-    // Needed if the ScannerViewController was initialised via a storyboard
+    //Needed if the ScannerViewController was initialised via a storyboard
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    
+    
+  
+    // MARK: - LifeCycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCaptureSession()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        //As previewLayer is an optional show error
+        guard let previewLayer = previewLayer else {
+            scannerDelegate?.didSurface(error: .invalidDeviceInput)
+            return
+        }
+        
+        //Setup the Preview layer after viewDidLayoutSubviews
+        previewLayer.frame = view.layer.bounds
+    }
     
     //Get camera looking for barcodes and preview layer up and running. With checks e.g camera access etc
     private func setupCaptureSession() {

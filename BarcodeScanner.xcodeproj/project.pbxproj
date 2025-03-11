@@ -23,6 +23,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5286D5562D7BBD4B00C417E2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5286D4CC2D7B3FA400C417E2 /* BarcodeScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcodeScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5286D4DC2D7B3FA800C417E2 /* BarcodeScannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BarcodeScannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +144,7 @@
 				5286D4C82D7B3FA400C417E2 /* Sources */,
 				5286D4C92D7B3FA400C417E2 /* Frameworks */,
 				5286D4CA2D7B3FA400C417E2 /* Resources */,
+				5286D5562D7BBD4B00C417E2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
