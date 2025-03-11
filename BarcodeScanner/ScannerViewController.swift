@@ -57,7 +57,7 @@ final class ScannerViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        //As previewLayer is an optional show error
+        //As previewLayer is an optional show error - would be triggered if run on the simulator
         guard let previewLayer = previewLayer else {
             scannerDelegate?.didSurface(error: .invalidDeviceInput)
             return

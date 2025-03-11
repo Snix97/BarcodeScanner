@@ -11,7 +11,7 @@ struct BarcodeScannerView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Rectangle()
+                ScannerView()
                     .frame(maxWidth: .infinity, maxHeight: 400)
                 
                 //Just a spacer on its own pushes items to the top, but it can be customized with a frame
@@ -29,6 +29,8 @@ struct BarcodeScannerView: View {
             }
             .navigationTitle("Barcode Scanner")
         }
+        //Make app look same on iPhone & iPad if omit it wont show full screen on iPad
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
