@@ -64,9 +64,11 @@ struct ScannerView: UIViewControllerRepresentable {
         }
         
         func didSurface(error: CameraError) {
-            switch error {
-                case .invalidDeviceInput: scannerView.alertItem = AlertContext.invalidDeviceInput
-                case .invalidScannedValue: scannerView.alertItem = AlertContext.invalidScannedType
+            DispatchQueue.main.async { [self] in
+                switch error {
+                    case .invalidDeviceInput: scannerView.alertItem = AlertContext.invalidDeviceInput
+                    case .invalidScannedValue: scannerView.alertItem = AlertContext.invalidScannedType
+                }
             }
         }
     }

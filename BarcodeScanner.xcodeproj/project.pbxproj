@@ -53,18 +53,20 @@
 		5286D5342D7B562B00C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScannerTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Alert.swift,
-				ScannerView.swift,
-				ScannerViewController.swift,
+				Screens/BarcodeScanner/BarcodeScannerViewModel.swift,
+				Utilities/Alert.swift,
+				Views/UIKitComponents/ScannerView.swift,
+				Views/UIKitComponents/ScannerViewController.swift,
 			);
 			target = 5286D4DB2D7B3FA800C417E2 /* BarcodeScannerTests */;
 		};
 		5286D5352D7B562B00C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScannerUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Alert.swift,
-				ScannerView.swift,
-				ScannerViewController.swift,
+				Screens/BarcodeScanner/BarcodeScannerViewModel.swift,
+				Utilities/Alert.swift,
+				Views/UIKitComponents/ScannerView.swift,
+				Views/UIKitComponents/ScannerViewController.swift,
 			);
 			target = 5286D4E52D7B3FA900C417E2 /* BarcodeScannerUITests */;
 		};

@@ -5,18 +5,16 @@
 //  Created by Claire Roughan on 07/03/2025.
 //
 
+import SwiftUI
 
 struct BarcodeScannerView: View {
     
     /*
-     Ensure whenever scannedCode changes the view will get updated. Take info
-     from coordinator and pass it to our scannerView. To do that we use @State
-     variables and Bindings $
+     Initialise a new VM so use @StateObject.
+     If passing/injecting one down in a view hierachy use @ObservedObject
      */
-    @State private var scannedCode = ""
-    
-    @State private var alertItem: AlertItem?
-    
+    @StateObject var viewModel = BarcodeScannerViewModel()
+
     //@State private var isShowingAlert = false - Used for Basic Alert example
     
     var body: some View {
@@ -24,7 +22,7 @@ struct BarcodeScannerView: View {
             VStack {
                 
                 //Add binding so whenever we change binding scannedCode in ScannerView we update the scannedCode @State variable here
-                ScannerView(scannedCode: $scannedCode, alertItem: $alertItem)
+                ScannerView(scannedCode: $viewModel.scannedCode, alertItem: $viewModel.alertItem)
                     .frame(maxWidth: .infinity, maxHeight: 400)
                 
                 //Just a spacer on its own pushes items to the top, but it can be customized with a frame
@@ -34,10 +32,10 @@ struct BarcodeScannerView: View {
                 Label("Barcode Scanned:", systemImage: "barcode.viewfinder")
                     .font(.title)
                 
-                Text(scannedCode.isEmpty ? "Not yet scanned" : scannedCode)
+                Text(viewModel.statusText)
                     .bold()
                     .font(.title)
-                    .foregroundColor(scannedCode.isEmpty ? .red :.green)
+                    .foregroundColor(viewModel.statusTextColor)
                     .padding()
                 
                 /*Temp example of button to trigger alert
@@ -56,10 +54,11 @@ struct BarcodeScannerView: View {
             }) */
             
             /*
-             Better more extensive way tpo do alerts - it waits to see which kind of alertItem it gets
-             because you can't have more than 1 alert defined so pass in the require alertContext
+             Better more extensive way tpo do alerts - it waits to see which kind of
+             alertItem it gets because you can't have more than 1 alert defined so pass
+             in the require alertContext
              */
-            .alert(item: $alertItem) { alertItem in
+            .alert(item: $viewModel.alertItem) { alertItem in
                 Alert(title: Text(alertItem.title),
                           message: Text(alertItem.message),
                       dismissButton: alertItem.dismissbutton)
