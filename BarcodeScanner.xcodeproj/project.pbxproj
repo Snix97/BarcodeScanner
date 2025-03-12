@@ -53,6 +53,7 @@
 		5286D5342D7B562B00C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScannerTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Alert.swift,
 				ScannerView.swift,
 				ScannerViewController.swift,
 			);
@@ -61,6 +62,7 @@
 		5286D5352D7B562B00C417E2 /* Exceptions for "BarcodeScanner" folder in "BarcodeScannerUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Alert.swift,
 				ScannerView.swift,
 				ScannerViewController.swift,
 			);
